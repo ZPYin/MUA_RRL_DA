@@ -73,6 +73,7 @@ xlabel('LT');
 ylabel('Height (km)');
 ylim([str2double(handles.h_B_Edit_Box.String), str2double(handles.h_T_Edit_Box.String)]);
 handles.RCS_axes.FontSize = 8;
+handles.RCS_axes.Box = 'on';
 handles.RCS_axes.FontName = 'Times New Roman';
 load('myjet_colormap.mat');
 colormap(myjet);
@@ -88,6 +89,7 @@ xlim([1e0, 1e8]);
 ylim([str2double(handles.h_B_Edit_Box.String), str2double(handles.h_T_Edit_Box.String)]);
 grid();
 handles.Raw_Sig_axes.FontSize = 8;
+handles.Raw_Sig_axes.Box = 'on';
 handles.Raw_Sig_axes.FontName = 'Times New Roman';
 
 % update the T_Ratio_axes
@@ -98,6 +100,7 @@ xlim([180, 300]);
 ax = gca;
 ax.XTick = 180:20:300;
 handles.T_Ratio_axes.FontSize = 8;
+handles.T_Ratio_axes.Box = 'on';
 handles.T_Ratio_axes.FontName = 'Times New Roman';
 grid();
 
@@ -110,6 +113,7 @@ xlim([180, 310]);
 ax = gca;
 ax.XTick = 180:20:310;
 handles.T_axes.FontSize = 8;
+handles.T_axes.Box = 'on';
 handles.T_axes.FontName = 'Times New Roman';
 grid();
 
@@ -122,6 +126,7 @@ ax = handles.Err_axes;
 ax.YTickLabel = '';
 ax.XTick = -8:2:8;
 handles.Err_axes.FontSize = 8;
+handles.Err_axes.Box = 'on';
 handles.Err_axes.FontName = 'Times New Roman';
 grid();
 
@@ -652,6 +657,7 @@ if ~ isempty(handles.Mie)
     xlabel('LT');
     ylabel('Height (km)');
     handles.RCS_axes.FontSize = 8;
+    handles.RCS_axes.Box = 'on';
     handles.RCS_axes.FontName = 'Times New Roman';
     ylim([str2double(handles.h_B_Edit_Box.String), str2double(handles.h_T_Edit_Box.String)]);
     title(sprintf('Logarithm of Range Corrected Signal'));
@@ -677,6 +683,7 @@ if ~ isempty(handles.Mie)
     grid();
     legend([p2], 'Location', 'NorthEast');
     handles.Raw_Sig_axes.FontSize = 8;
+    handles.Raw_Sig_axes.Box = 'on';
     handles.Raw_Sig_axes.FontName = 'Times New Roman';  
 
 end
@@ -1143,6 +1150,7 @@ grid();
 l = legend([p1, p2, p3], 'Location', 'NorthEast');
 l.FontSize = 4;
 handles.Raw_Sig_axes.FontSize = 8;
+handles.Raw_Sig_axes.Box = 'on';
 handles.Raw_Sig_axes.FontName = 'Times New Roman';
 hold off;  
 
@@ -1157,6 +1165,7 @@ xlim([180, 300]);
 ax = gca;
 ax.XTick = 180:20:300;
 handles.T_Ratio_axes.FontSize = 8;
+handles.T_Ratio_axes.Box = 'on';
 handles.T_Ratio_axes.FontName = 'Times New Roman';
 grid();
 legend([s1, p1], 'Location', 'NorthEast');
@@ -1172,6 +1181,7 @@ ax = gca;
 ax.XTick = 180:20:310;
 set(ax, 'YMinorTick', 'on', 'XMinorTick', 'on');
 handles.T_axes.FontSize = 8;
+handles.T_axes.Box = 'on';
 handles.T_axes.FontName = 'Times New Roman';
 grid();
 legend([p1, p2], 'Location', 'NorthEast');
@@ -1188,6 +1198,7 @@ ax = handles.Err_axes;
 ax.YTickLabel = '';
 ax.XTick = -8:2:8;
 handles.Err_axes.FontSize = 8;
+handles.Err_axes.Box = 'on';
 handles.Err_axes.FontName = 'Times New Roman';
 grid();
 legend([p1, p2], 'Location', 'NorthEast');
@@ -1270,7 +1281,7 @@ function [ pressure, altitude, temperature ] = get_rs( URL, handles )
 % get data from internet (example url:
 % 'http://weather.uwyo.edu/cgi-bin/sounding?region=europe&TYPE=TEXT%3ALIST&YEAR=2015&MONTH=03&FROM=2312&TO=2312&STNM=10393')
 
-[radiosonde, status] = urlread (URL, 'Timeout', 10);
+[status, radiosonde] = system(['wget -qO- "' URL '"']);
 
 if status == 0
     handles.log_box.String{end + 1} = sprintf('Could not import radiosonde data from web.');
